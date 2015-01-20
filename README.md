@@ -1,9 +1,7 @@
 # Tank (coming soon)
 
-Tank is on its way....
--------------------
-Tank is a Javascript framework designed to help developer in write less and safer js code.
--------------------
+___Tank is on its way....___
+__Tank is a Javascript framework designed to help developer in write less and safer js code.__
 
 ## Getting Started
 
