@@ -1,6 +1,5 @@
 # tank
-Getting Started
-=========
+## Getting Started
 
 Prerequisites
 ----
