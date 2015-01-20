@@ -1,10 +1,10 @@
 # tank
 ## Getting Started
 
-Prerequisites
-----
+## Prerequisites
+
 * Git
 * Maven 3
 
-Installation
-----
+## Installation
+
