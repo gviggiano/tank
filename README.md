@@ -2,7 +2,7 @@
 
 ___Tank is on its way....___
 
-_Javascript framework designed to help developer on writing less and safer js code._
+_A Javascript framework designed to help developer on writing less and safer js code._
 
 ## Getting Started
 
