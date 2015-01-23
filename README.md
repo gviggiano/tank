@@ -13,3 +13,4 @@ _A Javascript framework designed to help developer on writing less and safer js 
 
 ## Installation
 
+* Install
