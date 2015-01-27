@@ -1,0 +1,66 @@
+<section data-tank="bindings-container">
+    <div data-tank="customerProducts">
+        <div data-tank="customer">
+            <h1>Customer</h1>
+            <table>
+                <tbody>
+                <tr>
+                    <td>First Name</td>
+                    <td>
+                        <input id="firstValue" data-tank="customer.firstName" type="checkbox" value="John"/>
+                        <label for="firstValue">John</label>
+                    </td>
+                    <td>
+                        <input id="secondValue" data-tank="customer.firstName" type="checkbox" value="Jack"/>
+                        <label for="secondValue">Jack</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="customer.lastName">Last Name</label></td>
+                    <td colspan="2">
+                        <input id="customer.lastName" data-tank="customer.lastName" type="text">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-tank="product">
+            <h1>Product</h1>
+            <table width="100%">
+                <tbody>
+                <tr>
+                    <td data-tank="aa"><label for="product.code">Code</label></td>
+                    <td><input id="product.code" data-tank="product.code" type="text"/></td>
+                </tr>
+                <tr>
+                    <td><label for="productTypes">Type</label></td>
+                    <td><select id="productTypes" data-tank="product.types">
+                        <option data-tank="product.type"></option>
+                    </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <table id="customerList">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>SN</th>
+            </tr>
+            </thead>
+            <tbody id="table-data" data-tank="customers">
+            <tr>
+                <td data-tank="customers.firstName"></td>
+                <td data-tank="customers.lastName"></td>
+                <td data-tank="customers.serialNumber"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</section>
