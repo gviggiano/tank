@@ -1,0 +1,41 @@
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.mortbay.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>cacheControl</param-name>
+            <param-value>max-age=0, public</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>org.mortbay.jetty.servlet.MaxAge</param-name>
+        <param-value>-1</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>customerProductsServlet</servlet-name>
+        <servlet-class>com.tankframework.servlet.CustomerProductsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>customerProductsServlet</servlet-name>
+        <url-pattern>customerProducts.json</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>customerListServlet</servlet-name>
+        <servlet-class>com.tankframework.servlet.CustomerListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>customerListServlet</servlet-name>
+        <url-pattern>customerList.json</url-pattern>
+    </servlet-mapping>
+
+</web-app>
