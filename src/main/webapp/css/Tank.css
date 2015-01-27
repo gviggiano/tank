@@ -1,0 +1,12 @@
+.tank-hide {
+    display: none;
+}
+
+.tank-fade {
+    transition: opacity linear 1s;
+    opacity: 1;
+}
+
+.tank-fade-out {
+    opacity: 0;
+}
