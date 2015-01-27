@@ -1,0 +1,21 @@
+<div>
+Live demos
+<ul>
+    <li class="ajax_demo">Ajax</li>
+    <li>Css</li>
+    <li>Extend</li>
+    <li>Script and Tiles</li>
+</ul>
+<script>
+    Tank.define({
+        click: {
+            Selector: "li.ajax_demo",
+            log : { Log: "aaa" },
+            tile: { url: "/demos/demo_ajax.html", Selector: "div.demo_container" }
+        }
+    });
+</script>
+
+<div class="demo_container">
+</div>
+</div>
