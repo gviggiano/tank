@@ -3,11 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-</head>
 <script language="javascript" src="/js/Tank-0.9.0.js"></script>
 <script language="javascript">
     Tank.define({stylesheet: {File: {url: "/demos/include/demos.css"}}});
 </script>
+</head>
 <body>
 <div class="header">
     <h1>Tank</h1>
@@ -42,54 +42,43 @@
 
         Tank provides a single direct access point, the function
         <pre class="section">
-
-            Tank.define({});
-        </pre>
-
+        Tank.define({});</pre>
         Every property you put inside the object is threated and evaluated as a resorce globally or locally defined
         so you can simply do something like this:
         <pre class="section">
-
-            Tank.define({
-                stylesheet: { File: { url: '/path/to/your/css/style.css' } }
-            });
-        </pre>
-
+        Tank.define({
+            stylesheet: { File: { url: '/path/to/your/css/style.css' } }
+        });</pre>
         or get multiple requests and then log a message
         <pre class="section">
-
-            Tank.define({
-                get: {
-                    Request: {url: "/customerProducts.json?id={{=custId}}" }
-                    log: { Log: "request completed" }
-                }
-            });
-        </pre>
+        Tank.define({
+            get: {
+                Request: {url: "/customerProducts.json?id={{=custId}}" }
+                log: { Log: "request completed" }
+            }
+        });</pre>
         You can also define Tank methods inside the flow using the method "extend", globally (and they will be available to other flows) or locally (available since they are
         defined
         till the end of the flow).
         <pre class="section">
-
-            Tank.define({
-                aLocalDefinedFunction: {},
-                extend: {
-                    Global {
-                        globalScopedProp: "aLocalDefinedPropertyVal",
-                        globalScopedFunction: function (anyGlobalProp) {
-                            console.log(anyGlobalProp);
-                        }
-                    },
-                    Local: {
-                        aLocalDefinedProperty: "aLocalDefinedPropertyVal",
-                        aLocalDefinedFunction: function (aLocalDefinedProperty) {
-                            console.log(aLocalDefinedProperty);
-                        }
+        Tank.define({
+            aLocalDefinedFunction: {},
+            extend: {
+                Global {
+                    globalScopedProp: "aLocalDefinedPropertyVal",
+                    globalScopedFunction: function (anyGlobalProp) {
+                        console.log(anyGlobalProp);
                     }
-            });
-        </pre>
+                },
+                Local: {
+                    aLocalDefinedProperty: "aLocalDefinedPropertyVal",
+                    aLocalDefinedFunction: function (aLocalDefinedProperty) {
+                        console.log(aLocalDefinedProperty);
+                    }
+                }
+        });</pre>
         When executing this block, first of all Tank will call the extend function that will collect new definitions,
         then will run the "aLocalDefinedFunction" and the output will be "aLocalDefinedPropertyVal" in your js console.
-
     </div>
     <div class="paragraph">
         <h2>and now ?</h2>
