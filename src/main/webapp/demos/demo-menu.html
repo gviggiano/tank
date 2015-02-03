@@ -1,0 +1,29 @@
+<div class="demo-menu">
+    Live demos
+    <ul>
+        <li id="menu-ajax">Ajax</li>
+        <li id="menu-css">Css</li>
+        <li id="menu-extend">Extend</li>
+    </ul>
+    <script type="text/javascript">
+        Tank.define({
+            tile: {
+                Tile: [
+                    { url: "/demos/demo-ajax.html", Selector: "div.demo-container" },
+                    { url: "/demos/demo-css.html", Selector: "div.demo-container" },
+                    { url: "/demos/demo-extend.html", Selector: "div.demo-container" }
+                ],
+                fadeOut: {Selector: "div.demo-container>div"},
+
+                click:[
+                    {Selector: "li#menu-ajax", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-ajax"}} },
+                    {Selector: "li#menu-css", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-css"}} },
+                    {Selector: "li#menu-extend", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-extend"}} }
+                ]
+            }
+        });
+    </script>
+
+    <div class="demo-container">
+    </div>
+</div>
