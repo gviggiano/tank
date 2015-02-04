@@ -5,13 +5,15 @@ ___Tank is on its way....___
 Tank is an experimental framework targeted to simplify js code from complex function annidation through dom and
 _XHR requests event triggering
 
-## Getting Started
+## A new way to write JS code
 
-## Prerequisites
+__Object-based javascript flows
 
-* Git
-* Maven 3
+## Demo page [here](http://tank.thefaintinggoat.tk/)
 
-## Installation
+## TODO
 
-* Install
+* Project Standardization in JS format
+* JSON Template from/to html
+* Extend functionalities
+
