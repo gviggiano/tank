@@ -14,6 +14,6 @@ ___Object-based javascript flows
 ## TODO
 
 * Project Standardization in JS format
-* JSON Template from/to html
+* JSON Template/Model binding from/to html
 * Extend functionalities
 
