@@ -7,7 +7,7 @@ _XHR requests event triggering
 
 ## A new way to write JS code
 
-__Object-based javascript flows
+___Object-based javascript flows
 
 ## Demo page [here](http://tank.thefaintinggoat.tk/)
 
