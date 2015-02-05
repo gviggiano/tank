@@ -1,35 +1,10 @@
-window.Tank = {
-    ready: false, handlers: [],
-    $f: {
-        extend: function (Global, Local, Handler) {
-            for (var gprop in Global) {
-                if (Tank.$f[gprop]) console.warn("Tank already contains property" + gprop);
-                Tank.typeOf(Global[gprop]) == Tank.TYPE_FUNCTION ? Tank.$f[gprop] = Global[gprop] : Tank.$m[gprop] = Global[gprop];
-                Tank.typeOf(Global[gprop]) == Tank.TYPE_FUNCTION ? Handler.parent.$f[gprop] = Global[gprop] : Handler.parent.$m[gprop] = Global[gprop];
-            }
-            for (var lprop in Local) {
-                Tank.typeOf(Local[lprop]) == Tank.TYPE_FUNCTION ? Handler.parent.$f[lprop] = Local[lprop] : Handler.parent.$m[lprop] = Local[lprop];
-            }
-        },
-        exec: function () {
-        }
-    },
-    $m: {}
-};
+window.Tank = function () {
 
-(function () {
-
-    Tank.typeOf = function (something) {
+    var typeOf = function (something) {
         return Object.prototype.toString.call(something);
     };
 
-    Tank.TYPE_FUNCTION = Tank.typeOf(Object);
-    Tank.TYPE_OBJECT = Tank.typeOf({});
-    Tank.TYPE_STRING = Tank.typeOf('');
-    Tank.TYPE_NUMBER = Tank.typeOf(0);
-    Tank.TYPE_ARRAY = Tank.typeOf([]);
-
-    Tank.uuid = function () {
+    var uuid = function () {
         var x = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
@@ -37,20 +12,20 @@ window.Tank = {
         return x;
     };
 
-    Tank.element = function (selector, node) {
+    var element = function (selector, node) {
         node = node || document;
         return node.querySelectorAll(selector);
     };
 
-    Tank.createElement = function (name, attrs) {
+    var createElement = function (name, attrs) {
         return Tank.merge(document.createElement(name), attrs);
     };
 
-    Tank.createFragment = function (html) {
+    var createFragment = function (html) {
         return Tank.createElement('div', {async: false, innerHTML: html}).children;
     };
 
-    Tank.copy = function (Object) {
+    var copy = function (Object) {
         var copy = {};
         for (var prop in Object) {
             copy[prop] = Object[prop];
@@ -58,7 +33,7 @@ window.Tank = {
         return copy;
     };
 
-    Tank.merge = function () {
+    var merge = function () {
         var target = arguments[0], sources = Array.prototype.slice.call(arguments, [1]);
         Tank.forEach(sources, function (source) {
             for (var property in source) {
@@ -69,13 +44,13 @@ window.Tank = {
         return target;
     };
 
-    Tank.toArray = function (obj) {
+    var toArray = function (obj) {
         var t = Tank.typeOf(obj);
         return !obj ? [] : (t == Tank.TYPE_ARRAY) || (t != Tank.TYPE_STRING
-            && Tank.typeOf(obj.length) == Tank.TYPE_NUMBER) ? obj : new Array(obj);
+        && Tank.typeOf(obj.length) == Tank.TYPE_NUMBER) ? obj : new Array(obj);
     };
 
-    Tank.format = function () {
+    var format = function () {
         if (arguments.length <= 1) return arguments;
         var str = arguments[0], args = Array.prototype.slice.call(arguments, [1]);
         return str.replace(/{(\d+)}/g, function (match, number) {
@@ -83,23 +58,19 @@ window.Tank = {
         });
     };
 
-    Tank.forEach = function (array, fn) {
+    var forEach = function (array, fn) {
         [].forEach.call(Tank.toArray(array), fn);
     };
 
-    Tank.model = function (expression, handler) {
+    var model = function (expression, handler) {
         return new Function(['handler'], 'return handler.$m.' + expression + ';')(handler);
     };
 
-    var _replaceModel = function (str, models, expr) {
+    var expand = function (str, handler, expr) {
         var expr = expr || "$1";
         return new Function("obj", "var p=[],print=function(){p.push.apply(p,arguments);}; with(obj){p.push('"
-            + str.replace(/[\r\t\n]/g, " ").split("{{").join("\t").replace(/\t=(.*?)}}/g, "'," + expr + ",'")
-            .split("\t").join("');").split("}}").join("p.push('").split("\r").join("\\'") + "');} return p.join('');")(models)
-    };
-
-    var _replaceUrl = function (url, models) {
-        return _replaceModel(url, models, 'encodeURIComponent($1)');
+        + str.replace(/[\r\t\n]/g, " ").split("{{").join("\t").replace(/\t=(.*?)}}/g, "'," + expr + ",'")
+            .split("\t").join("');").split("}}").join("p.push('").split("\r").join("\\'") + "');} return p.join('');")(handler.$m)
     };
 
     var _info = function (handler) {
@@ -164,8 +135,19 @@ window.Tank = {
             child.init();
         });
     };
+    var _extend = function (Global, Local, Handler) {
+        for (var gprop in Global) {
+            if (Tank.$f[gprop]) console.warn("Tank already contains property" + gprop);
+            Tank.typeOf(Global[gprop]) == Tank.TYPE_FUNCTION ? Tank.$f[gprop] = Global[gprop] : Tank.$m[gprop] = Global[gprop];
+            Tank.typeOf(Global[gprop]) == Tank.TYPE_FUNCTION ? Handler.parent.$f[gprop] = Global[gprop] : Handler.parent.$m[gprop] = Global[gprop];
+        }
+        for (var lprop in Local) {
+            Tank.typeOf(Local[lprop]) == Tank.TYPE_FUNCTION ? Handler.parent.$f[lprop] = Local[lprop] : Handler.parent.$m[lprop] = Local[lprop];
+        }
+    };
+    var noop = function(){};
 
-    Tank.Event = function (Target, EventType, Handler, TriggerEachOne) {
+    var Event = function (Target, EventType, Handler, TriggerEachOne) {
         var evtCounter = Tank.toArray(Target).length;
         Tank.forEach(Target, function (target) {
             target.addEventListener(EventType, function (evt) {
@@ -181,7 +163,7 @@ window.Tank = {
         return this;
     };
 
-    Tank.Handler = function (name, flow, parent) {
+    var Handler = function (name, flow, parent) {
         if (flow.extend) {
             var copy = Tank.copy(flow);
             delete copy.extend;
@@ -194,7 +176,7 @@ window.Tank = {
         };
     };
 
-    Tank.define = function (prop) {
+    var define = function (prop) {
         if (!prop) return;
         var start = function () {
             var handler = new Tank.Handler('_root', prop, Tank);
@@ -211,9 +193,42 @@ window.Tank = {
         }();
     };
 
+    return {
+        ready: false, handlers: [],
+        $f: { extend: _extend, exec: noop },
+        $m: {},
+        TYPE_FUNCTION : typeOf(Object),
+        TYPE_OBJECT : typeOf({}),
+        TYPE_STRING : typeOf(''),
+        TYPE_NUMBER : typeOf(0),
+        TYPE_ARRAY : typeOf([]),
+        typeOf:typeOf,
+        uuid: uuid, element:element,
+        createElement:createElement,
+        createFragment:createFragment,
+        copy:copy,
+        merge:merge,
+        expand:expand,
+        toArray:toArray,
+        format:format,
+        forEach:forEach,
+        model:model,
+        define: define,
+        Handler:Handler,
+        Event:Event
+    }
+}();
+
+(function () {
+
+
     Tank.define({
-        stylesheet: {
-            File: {url: "/css/Tank.css"}
+        styledef: {
+            Styles: [
+                {name: ".tank-hide", attrs: {display: "none!important"}},
+                {name: ".tank-fade", attrs: {transition: "opacity linear 1s", opacity: "1"}},
+                {name: ".tank-fade-out", attrs: {opacity: "0"}}
+            ]
         },
         extend: {
             Global: {
@@ -244,14 +259,14 @@ window.Tank = {
                             Tank.forEach(scripts, function (script) {
                                 if (!script.src) {
                                     var oldChild = script.parentNode.removeChild(script);
-                                    var newSrc = Tank.format('data:{0};base64,{1}',oldChild.type, window.btoa(oldChild.innerHTML));
-                                    scriptElements.push(Tank.createElement('script', {src: newSrc, type:oldChild.type, async:false }));
+                                    var newSrc = Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML));
+                                    scriptElements.push(Tank.createElement('script', {src: newSrc, type: oldChild.type, async: false}));
                                 }
                             });
-                           selector.appendChild(elem);
+                            selector.appendChild(elem);
                         })
                     });
-                    scriptElements.length ? this.flow = { append: {Element: scriptElements, Selector: 'head', exec: this.copy(this.flow) }}: undefined;
+                    scriptElements.length ? this.flow = {append: {Element: scriptElements, Selector: 'head', exec: this.copy(this.flow)}} : undefined;
                 },
 
                 /**
@@ -303,6 +318,7 @@ window.Tank = {
                     this.flow = {get: {Request: File, append: {Element: Scripts, Selector: "head", exec: this.copy(this.flow)}}};
                 },
 
+
                 /**
                  @param File (  string | Array.<string> )
                  */
@@ -313,6 +329,29 @@ window.Tank = {
                     this.flow = {get: {Request: File, append: {Element: Stylesheets, Selector: "head", exec: this.copy(this.flow)}}};
                 },
 
+
+                /**
+                 @param Styles (  { name: string, attrs: Object | Array.<{name: string, attrs: Object}> )
+                 */
+                styledef: function (Styles) {
+                    var str = '';
+                    Tank.forEach(Styles, function (style) {
+                        str += style.name + "{\n";
+                        for (var prop in style.attrs) {
+                            str += "\t" + prop + " : " + style.attrs[prop] + ";\n";
+                        }
+                        str += "}\n";
+                    });
+                    console.log('str:' + str);
+                    var href = Tank.format('data:text/css;base64,{0}', window.btoa(str));
+                    this.flow = {
+                        append: {
+                            Element: Tank.createElement('link', {rel: "stylesheet", href: href, type: "text/css", async: false}),
+                            Selector: "head", exec: this.copy(this.flow)
+                        }
+                    };
+                },
+
                 /**
                  @param Tile ( { url: string, Selector: string } | Array.<{ url: string, Selector: string }> )
                  @param Handler ( this )
@@ -321,9 +360,9 @@ window.Tank = {
                     var Tiles = Tank.toArray(Tile).map(function (el) {
                         el.tankDone = function (xmlHttpRequest) {
                             new Tank.Handler(Handler.name + "_tile_child",
-                                { append: { Element: Tank.createFragment(xmlHttpRequest.responseText), Selector: el.Selector }}, Handler).init();
+                                {append: {Element: Tank.createFragment(xmlHttpRequest.responseText), Selector: el.Selector}}, Handler).init();
                         };
-                        return Tank.merge({url: _replaceUrl(el.url, Handler.$m)}, el);
+                        return Tank.merge({url: Tank.expand(el.url, Handler, "encodeURIComponent($1)")}, el);
                     });
                     this.flow = {get: {Request: Tiles, exec: this.copy(this.flow)}};
                 },
@@ -348,7 +387,7 @@ window.Tank = {
                  */
                 get: function (Request, TriggerEachRequest, Handler) {
                     var Requests = Tank.toArray(Request).map(function (el) {
-                        return Tank.merge({method: 'get', url: _replaceUrl(el.url, Handler.$m)}, el);
+                        return Tank.merge({method: 'get', url:  Tank.expand(el.url, Handler, "encodeURIComponent($1)") }, el);
                     });
                     this.flow = {ajax: {Request: Requests, TriggerEachRequest: TriggerEachRequest, exec: this.copy(this.flow)}};
                 },
@@ -359,7 +398,7 @@ window.Tank = {
                  */
                 post: function (Request, TriggerEachRequest, Handler) {
                     var Requests = Tank.toArray(Request).map(function (el) {
-                        return Tank.merge({method: 'post', url: _replaceUrl(el.url, Handler.$m)}, el);
+                        return Tank.merge({method: 'post', url:  Tank.expand(el.url, Handler, "encodeURIComponent($1)") }, el);
                     });
                     this.flow = {ajax: {Request: Requests, TriggerEachRequest: TriggerEachRequest, exec: this.copy(this.flow)}};
                 },
@@ -418,7 +457,8 @@ window.Tank = {
                 fadeIn: function (Selector) {
                     this.flow = {
                         addCss: {Selector: Selector, CssClass: 'tank-fade'},
-                        removeCss: {Selector: Selector, CssClass: 'tank-fade-out',
+                        removeCss: {
+                            Selector: Selector, CssClass: 'tank-fade-out',
                             exec: this.copy(this.flow)
                         }
                     }
