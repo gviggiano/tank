@@ -95,7 +95,7 @@ h1, h2, h3, h4, .logo {
     max-width: 80%;
     margin: 20px auto;
     line-break: auto;
-    box-shadow: 0 0 4px 4px #111;
+    /*box-shadow: 0 0 4px 4px #111;*/
     overflow-x: auto;
 }
 
