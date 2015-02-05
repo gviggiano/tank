@@ -212,9 +212,6 @@ window.Tank = {
     };
 
     Tank.define({
-        stylesheet: {
-            File: {url: "/css/Tank.css"}
-        },
         extend: {
             Global: {
 

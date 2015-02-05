@@ -3,10 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-<script language="javascript" src="/tank/js/Tank-0.9.0.js"></script>
-<script language="javascript">
-    Tank.define({stylesheet: {File: {url: "/tank/demos/include/demos.css"}}});
-</script>
+    <script language="javascript" src="/tank/js/Tank-0.9.0.js"></script>
+    <script language="javascript">
+        Tank.define({
+            stylesheet: [
+                {File: {url: "/tank/css/Tank.css"}},
+                {File: {url: "/tank/demos/include/demos.css"}}]
+        });
+    </script>
 </head>
 <body>
 <div class="header">
