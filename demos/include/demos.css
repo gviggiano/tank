@@ -53,8 +53,11 @@ body {
 }
 
 .footer {
+    margin: 0;
     height: 20px;
     width: 100%;
+    border-left: 0;
+    border-right: 0;
     border-top: 1px solid #fff;
     box-shadow: 0 -2px 3px #555;
     position: fixed;
