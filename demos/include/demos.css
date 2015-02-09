@@ -4,10 +4,10 @@
 }
 body {
     background-color: #ddd;
+    min-width: 300px;
 }
 .header {
     margin: 0 auto;
-    min-width: 570px;
     background-color: #ccc;
     position: fixed;
     height: 40px;
@@ -18,8 +18,7 @@ body {
 }
 
 .container {
-    min-width: 570px;
-    max-width: 80%;
+    min-width: 80%;
     margin-left: auto;
     margin-right: auto;
     margin-top:150px;
