@@ -10,32 +10,44 @@ body {
     margin: 0 auto;
     background-color: #ccc;
     position: fixed;
-    /*height: 40px;*/
     top:0;
     width: 100%;
     border-bottom: 1px solid #fcfcfc;
     z-index: 2000;
 }
 
-@media only screen and (max-width: 550px){
+@media only screen and (max-width: 550px) {
     .gh-link {
-        display: none;
+        display: none!important;
     }
-
 }
 
-
+@media only screen and (min-width: 300px) {
+    .container {
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .container {
+        width: 90%;
+    }
+}
+@media only screen and (min-width: 800px) {
+    .container {
+        width: 80%;
+    }
+}
 
 .container {
-    min-width: 80%;
+    transition: width 0.3s linear;
     margin-left: auto;
     margin-right: auto;
     margin-top:150px;
     color: #414141;
     font-weight: bolder;
     background-color: #ffffff;
-    padding-left: 30px;
-    padding-right: 30px;
+    /*padding-left: 30px;*/
+    /*padding-right: 30px;*/
     border-radius: 4px;
     box-shadow: 0 1px 3px #444;
 }
@@ -53,14 +65,15 @@ body {
     font-size:12px;
 }
 h1, h2, h3, h4, .logo {
-    display: inline-block;
-    float: left;
+    /*display: inline-block;*/
+    /*float: left;*/
     color: #909090;
     text-transform: uppercase;
     text-shadow:  1px 1px  #ccc, -1px -1px #666;
 }
 
 .logo {
+    float: left;
     font-size: 35px;
     font-weight: bolder;
     margin-left: 15px;
@@ -115,6 +128,7 @@ h1, h2, h3, h4, .logo {
     line-break: auto;
     /*box-shadow: 0 0 4px 4px #111;*/
     overflow-x: auto;
+    width: 80%;
 }
 
 .summary {
