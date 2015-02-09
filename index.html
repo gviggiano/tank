@@ -8,22 +8,17 @@
     <script language="javascript">
         Tank.define({
             stylesheet: [
-                {File: {url: "./css/Tank.css"}},
                 {File: {url: "./demos/include/demos.css"}}]
         });
     </script>
 </head>
 <body>
 <div class="header">
-    <div style="float: right;margin-right: 5px">
-        <div style="display: inline-block; margin: 5px">
-            <div class="gh-clone-label"><b>HTTPS</b> clone URL</div>
-        </div>
-        <div style="float: right;margin-right: 5px;height:40px">
-            <div style="margin:5px; display: inline-block"><input type="text" class="gh-clone-input" value="https://github.com/gviggiano/tank.git" readonly="readonly"></div>
-        </div>
-    </div>
     <div class="logo">Tank</div>
+    <div class="gh-link">
+        <div class="gh-clone-label"><b>HTTPS</b> clone URL</div>
+        <input type="text" class="gh-clone-input" value="https://github.com/gviggiano/tank.git" readonly="readonly">
+    </div>
 </div>
 <div class="container">
     <div class="section summary">
