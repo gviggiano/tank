@@ -1,5 +1,5 @@
 .tank-hide {
-    display: none;
+    display: none!important;
 }
 .tank-fade {
     transition: opacity linear 1s;

@@ -3,12 +3,12 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script language="javascript" src="/tank/js/Tank-0.9.0.js"></script>
+    <script language="javascript" src="./js/Tank-0.9.0.js"></script>
     <script language="javascript">
         Tank.define({
             stylesheet: [
-                {File: {url: "/tank/css/Tank.css"}},
-                {File: {url: "/tank/demos/include/demos.css"}}]
+                {File: {url: "./css/Tank.css"}},
+                {File: {url: "./demos/include/demos.css"}}]
         });
     </script>
 </head>
@@ -53,8 +53,8 @@
         Leaning only to the latest specifications of HTML5 (no JQuery or other facilities)
 
         Tank provides a single direct access point, the function
-        <code class="section">
-        Tank.define({});</code>
+        <pre class="section">
+        Tank.define({});</pre>
         Every property you put inside the object is threated and evaluated as a resorce globally or locally defined
         so you can simply do something like this:
         <pre class="section">

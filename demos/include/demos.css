@@ -6,6 +6,7 @@ body {
     background-color: #ddd;
 }
 .header {
+    min-width: 570px;
     background-color: #ccc;
     position: fixed;
     height: 40px;
@@ -16,8 +17,11 @@ body {
 }
 
 .container {
-    min-width: 500px;
-    margin: 150px 235px 50px;
+    min-width: 570px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:150px;
     color: #414141;
     font-weight: bolder;
     background-color: #ffffff;
@@ -40,9 +44,9 @@ body {
     font-size:12px;
 }
 h1, h2, h3, h4, .logo {
-    color: #b22222;
+    color: #909090;
     text-transform: uppercase;
-    text-shadow:  1px 1px  #ddd, -1px -1px #666;
+    text-shadow:  1px 1px  #ccc, -1px -1px #666;
 }
 
 .logo {
