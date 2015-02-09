@@ -225,7 +225,7 @@ window.Tank = function () {
     Tank.define({
         styledef: {
             Styles: [
-                {name: ".tank-hide", attrs: {display: "none!important"}},
+                {name: ".tank-hide", attrs: {visibility:"hidden", opacity:"0", display: "none!important"}},
                 {name: ".tank-fade", attrs: {transition: "opacity linear 1s", opacity: "1"}},
                 {name: ".tank-fade-out", attrs: {opacity: "0"}}
             ]
