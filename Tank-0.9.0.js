@@ -22,7 +22,7 @@ window.Tank = function () {
     };
 
     var createFragment = function (html) {
-        return Tank.createElement('div', {async: false, innerHTML: html}).children;
+        return Tank.createElement('div', {async: false, innerHTML: html}).childNodes;
     };
 
     var copy = function (Object) {
@@ -253,6 +253,7 @@ window.Tank = function () {
                  */
                 append: function (Element, Selector) {
                     var scriptElements = [];
+                    console.log(Element);
                     Tank.forEach(Element, function (elem) {
                         Tank.forEach(Tank.element(Selector), function (selector) {
                             var scripts = Tank.element('script', elem);
