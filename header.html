@@ -1,0 +1,20 @@
+<div class="gh-link">
+    <div class="gh-clone-label"><b>HTTPS</b> clone URL</div>
+    <input type="text" class="gh-clone-input" value="https://github.com/gviggiano/tank.git" readonly="readonly" >
+</div>
+<div class="logo">Tank</div>
+<script type="text/javascript">
+    Tank.define({
+        click: {
+            Selector:"div.logo",
+            alertMe: {}
+        },
+        extend: {
+            Local: {
+                alertMe : function() {
+                    alert("Tank logo pressed");
+                }
+            }
+        }
+    });
+</script>

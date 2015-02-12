@@ -22,7 +22,7 @@ window.Tank = function () {
     };
 
     var createFragment = function (html) {
-        return Tank.createElement('div', {async: false, innerHTML: html}).children;
+        return Tank.createElement('div', {async: false, innerHTML: html}).childNodes;
     };
 
     var copy = function (Object) {
@@ -145,7 +145,8 @@ window.Tank = function () {
             Tank.typeOf(Local[lprop]) == Tank.TYPE_FUNCTION ? Handler.parent.$f[lprop] = Local[lprop] : Handler.parent.$m[lprop] = Local[lprop];
         }
     };
-    var noop = function(){};
+    var noop = function () {
+    };
 
     var Event = function (Target, EventType, Handler, TriggerEachOne) {
         var evtCounter = Tank.toArray(Target).length;
@@ -195,27 +196,27 @@ window.Tank = function () {
 
     return {
         ready: false, handlers: [],
-        $f: { extend: _extend, exec: noop },
+        $f: {extend: _extend, exec: noop},
         $m: {},
-        TYPE_FUNCTION : typeOf(Object),
-        TYPE_OBJECT : typeOf({}),
-        TYPE_STRING : typeOf(''),
-        TYPE_NUMBER : typeOf(0),
-        TYPE_ARRAY : typeOf([]),
-        typeOf:typeOf,
-        uuid: uuid, element:element,
-        createElement:createElement,
-        createFragment:createFragment,
-        copy:copy,
-        merge:merge,
-        expand:expand,
-        toArray:toArray,
-        format:format,
-        forEach:forEach,
-        model:model,
+        TYPE_FUNCTION: typeOf(Object),
+        TYPE_OBJECT: typeOf({}),
+        TYPE_STRING: typeOf(''),
+        TYPE_NUMBER: typeOf(0),
+        TYPE_ARRAY: typeOf([]),
+        typeOf: typeOf,
+        uuid: uuid, element: element,
+        createElement: createElement,
+        createFragment: createFragment,
+        copy: copy,
+        merge: merge,
+        expand: expand,
+        toArray: toArray,
+        format: format,
+        forEach: forEach,
+        model: model,
         define: define,
-        Handler:Handler,
-        Event:Event
+        Handler: Handler,
+        Event: Event
     }
 }();
 
@@ -225,7 +226,7 @@ window.Tank = function () {
     Tank.define({
         styledef: {
             Styles: [
-                {name: ".tank-hide", attrs: {visibility:"hidden", opacity:"0", display: "none!important"}},
+                {name: ".tank-hide", attrs: {visibility: "hidden", opacity: "0", display: "none!important"}},
                 {name: ".tank-fade", attrs: {transition: "opacity linear 1s", opacity: "1"}},
                 {name: ".tank-fade-out", attrs: {opacity: "0"}}
             ]
@@ -255,15 +256,30 @@ window.Tank = function () {
                     var scriptElements = [];
                     Tank.forEach(Element, function (elem) {
                         Tank.forEach(Tank.element(Selector), function (selector) {
-                            var scripts = Tank.element('script', elem);
-                            Tank.forEach(scripts, function (script) {
-                                if (!script.src) {
-                                    var oldChild = script.parentNode.removeChild(script);
-                                    var newSrc = Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML));
-                                    scriptElements.push(Tank.createElement('script', {src: newSrc, type: oldChild.type, async: false}));
-                                }
-                            });
-                            selector.appendChild(elem);
+                            console.log('Selector : '+selector);
+                            console.log(Element);
+                            if (elem.nodeType !== 3) {
+                                var scripts = Tank.element('script', elem);
+                                Tank.forEach(scripts, function (script) {
+                                    if (!script.src) {
+                                        var oldChild = script.parentNode ? script.parentNode.removeChild(script) : script;
+                                        scriptElements.push(Tank.createElement('script', {
+                                            src: Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML)),
+                                            type: oldChild.type,
+                                            async: false
+                                        }));
+                                    }
+                                });
+                            }
+                            if (elem.tagName == 'SCRIPT' && !elem.src) {
+                                scriptElements.push(Tank.createElement('script', {
+                                    src: Tank.format('data:{0};base64,{1}', elem.type, window.btoa(elem.innerHTML)),
+                                    type: elem.type,
+                                    async: false
+                                }));
+                            } else {
+                                selector.appendChild(elem);
+                            }
                         })
                     });
                     scriptElements.length ? this.flow = {append: {Element: scriptElements, Selector: 'head', exec: this.copy(this.flow)}} : undefined;
@@ -342,7 +358,6 @@ window.Tank = function () {
                         }
                         str += "}\n";
                     });
-                    console.log('str:' + str);
                     var href = Tank.format('data:text/css;base64,{0}', window.btoa(str));
                     this.flow = {
                         append: {
@@ -387,7 +402,7 @@ window.Tank = function () {
                  */
                 get: function (Request, TriggerEachRequest, Handler) {
                     var Requests = Tank.toArray(Request).map(function (el) {
-                        return Tank.merge({method: 'get', url:  Tank.expand(el.url, Handler, "encodeURIComponent($1)") }, el);
+                        return Tank.merge({method: 'get', url: Tank.expand(el.url, Handler, "encodeURIComponent($1)")}, el);
                     });
                     this.flow = {ajax: {Request: Requests, TriggerEachRequest: TriggerEachRequest, exec: this.copy(this.flow)}};
                 },
@@ -398,7 +413,7 @@ window.Tank = function () {
                  */
                 post: function (Request, TriggerEachRequest, Handler) {
                     var Requests = Tank.toArray(Request).map(function (el) {
-                        return Tank.merge({method: 'post', url:  Tank.expand(el.url, Handler, "encodeURIComponent($1)") }, el);
+                        return Tank.merge({method: 'post', url: Tank.expand(el.url, Handler, "encodeURIComponent($1)")}, el);
                     });
                     this.flow = {ajax: {Request: Requests, TriggerEachRequest: TriggerEachRequest, exec: this.copy(this.flow)}};
                 },

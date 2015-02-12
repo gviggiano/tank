@@ -50,6 +50,7 @@ body {
     /*padding-right: 30px;*/
     border-radius: 4px;
     box-shadow: 0 1px 3px #444;
+    /*padding: 5px;*/
 }
 
 .footer {
@@ -149,6 +150,8 @@ h1, h2, h3, h4, .logo {
 .paragraph {
     padding-top: 45px;
     padding-bottom: 55px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .tile {

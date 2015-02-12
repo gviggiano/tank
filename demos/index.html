@@ -7,8 +7,8 @@
     <script type="text/javascript">
         Tank.define(
             {
-                stylesheet: {File: { url: "./include/demos.css"}},
-                tile: { Tile: { url: "./demo-menu.html", Selector: "div.container" } }
+                stylesheet: {File: { url: "../css/demos.css"}},
+                tile: { Tile: [{ url: "./demo-menu.html", Selector: "div.container" }, { url: "../footer.html", Selector: "div.footer"} ]}
             }
         );
     </script>
@@ -24,7 +24,7 @@
 <div class="container">
 </div>
 <div class="footer">
-    &copy;copyright 2015 Giuseppe Viggiano. under <a href="http://en.wikipedia.org/wiki/MIT_License">MIT license</a>
+    <!--&copy;copyright 2015 Giuseppe Viggiano. under <a href="http://en.wikipedia.org/wiki/MIT_License">MIT license</a>-->
 </div>
 </body>
 </html>
