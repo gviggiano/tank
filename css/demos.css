@@ -15,6 +15,19 @@ body {
     border-bottom: 1px solid #fcfcfc;
     z-index: 2000;
 }
+a {
+    text-decoration: none;
+    font-weight: bolder;
+    color: #556b2f;
+    font-family: "Consolas", "Menlo", "Courier", monospace;
+    /*text-transform: uppercase;*/
+    font-size: 16px;
+    /*text-shadow: 1px -1px #fcfcfc;*/
+}
+a:hover {
+    text-decoration: underline;
+}
+
 
 @media only screen and (max-width: 550px) {
     .gh-link {
