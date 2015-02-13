@@ -1,27 +1,31 @@
-<div class="demo-menu">
-    Live demos
-    <ul>
-        <li id="menu-ajax">Ajax</li>
-        <li id="menu-css">Css</li>
-        <li id="menu-extend">Extend</li>
-    </ul>
-    <script type="text/javascript">
-        Tank.define({
-            tile: {
-                Tile: [
-                    { url: "./demo-ajax.html", Selector: "div.demo-container" },
-                    { url: "./demo-css.html", Selector: "div.demo-container" },
-                    { url: "./demo-extend.html", Selector: "div.demo-container" }
-                ],
-                hide: {Selector: "div.demo-container>div"},
-                click:[
-                    {Selector: "li#menu-ajax", fadeHide: { Selector: "div.demo-container>div", fadeShow: {Selector:"div.demo-container>div.demo-ajax"}}},
-                    {Selector: "li#menu-css", fadeHide: { Selector: "div.demo-container>div" , fadeShow: {Selector:"div.demo-container>div.demo-css"}}},
-                    {Selector: "li#menu-extend", fadeHide: { Selector: "div.demo-container>div" , fadeShow: {Selector:"div.demo-container>div.demo-extend"}}}
-                ]
-            }
-        });
-    </script>
+<div class="paragraph">
+    <div class="demo-menu">
+        Live demos
+        <ul>
+            <li id="menu-ajax">Ajax</li>
+            <li id="menu-css">Css</li>
+            <li id="menu-extend">Extend</li>
+        </ul>
+        <script type="text/javascript">
+            Tank.define({
+                tile: {
+                    Tile: [
+                        {url: "./demo-ajax.html", Selector: "div.demo-container"},
+                        {url: "./demo-css.html", Selector: "div.demo-container"},
+                        {url: "./demo-extend.html", Selector: "div.demo-container"}
+                    ],
+                    hide: {Selector: "div.demo-container>div"},
+                    click: [
+                        {Selector: "li#menu-ajax", fadeHide: {Selector: "div.demo-container>div", fadeShow: {Selector: "div.demo-container>div.demo-ajax"}}},
+                        {Selector: "li#menu-css", fadeHide: {Selector: "div.demo-container>div", fadeShow: {Selector: "div.demo-container>div.demo-css"}}},
+                        {Selector: "li#menu-extend", fadeHide: {Selector: "div.demo-container>div", fadeShow: {Selector: "div.demo-container>div.demo-extend"}}}
+                    ]
+                }
+            });
+        </script>
+    </div>
+</div>
+<div class="paragraph">
     <div class="demo-container">
     </div>
 </div>
