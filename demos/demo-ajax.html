@@ -1,1 +1,18 @@
-<div class="demo-ajax">demo ajax</div>
+<script type="text/javascript">
+
+    Tank.define({
+        click: {
+            Selector:'div.demo-ajax',
+            alertMe:{}
+        },
+        extend: {
+            Local: {
+                alertMe : function() {
+                    alert("demo ajax pressed");
+                }
+            }
+        }
+    });
+</script>
+<div class="demo-ajax">demo ajaxian</div>
+

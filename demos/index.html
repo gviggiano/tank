@@ -8,23 +8,22 @@
         Tank.define(
             {
                 stylesheet: {File: { url: "../css/demos.css"}},
-                tile: { Tile: [{ url: "./demo-menu.html", Selector: "div.container" }, { url: "../footer.html", Selector: "div.footer"} ]}
+                tile: { Tile: [
+                    { url: "../header.html", Selector: "div.header" },
+                    { url: "./demo-menu.html", Selector: "div.container" },
+                    { url: "../footer.html", Selector: "div.footer"}
+                ]}
             }
         );
     </script>
 </head>
 <body>
 <div class="header">
-    <div class="logo">Tank</div>
-    <div class="gh-link">
-        <div class="gh-clone-label"><b>HTTPS</b> clone URL</div>
-        <input type="text" class="gh-clone-input" value="https://github.com/gviggiano/tank.git" readonly="readonly">
-    </div>
 </div>
 <div class="container">
 </div>
 <div class="footer">
-    <!--&copy;copyright 2015 Giuseppe Viggiano. under <a href="http://en.wikipedia.org/wiki/MIT_License">MIT license</a>-->
+
 </div>
 </body>
 </html>

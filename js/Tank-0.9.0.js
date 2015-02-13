@@ -22,7 +22,11 @@ window.Tank = function () {
     };
 
     var createFragment = function (html) {
-        return Tank.createElement('div', {async: false, innerHTML: html}).childNodes;
+        var frag = document.createDocumentFragment();
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        while (div.firstChild) frag.appendChild(div.firstChild);
+        return frag;
     };
 
     var copy = function (Object) {
@@ -112,7 +116,7 @@ window.Tank = function () {
     var _tryExecute = function (handler) {
         if (Tank.typeOf(handler.flow) != Tank.TYPE_FUNCTION) {
             try {
-                console.info(_info(handler));
+                //console.info(_info(handler));
                 return handler.$f[handler.name].apply(handler, _args(handler, _argNames(handler)));
             } catch (e) {
                 _printStacktrace(e.message, handler);
@@ -193,6 +197,18 @@ window.Tank = function () {
             });
         }();
     };
+    var createScript = function (scriptNode) {
+        if (!scriptNode.src) {
+            var oldChild = scriptNode.parentNode ? scriptNode.parentNode.removeChild(scriptNode) : scriptNode;
+            return Tank.createElement('script', {
+                src: Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML)),
+                type: oldChild.type,
+                async: false
+            });
+        } else {
+            return scriptNode;
+        }
+    };
 
     return {
         ready: false, handlers: [],
@@ -207,6 +223,7 @@ window.Tank = function () {
         uuid: uuid, element: element,
         createElement: createElement,
         createFragment: createFragment,
+        createScript: createScript,
         copy: copy,
         merge: merge,
         expand: expand,
@@ -226,7 +243,7 @@ window.Tank = function () {
     Tank.define({
         styledef: {
             Styles: [
-                {name: ".tank-hide", attrs: {visibility: "hidden", opacity: "0", display: "none!important"}},
+                {name: ".tank-hide", attrs: {position: 'absolute', left: '-100000px', top: '-1000000px', opacity: '0'}},
                 {name: ".tank-fade", attrs: {transition: "opacity linear 1s", opacity: "1"}},
                 {name: ".tank-fade-out", attrs: {opacity: "0"}}
             ]
@@ -255,28 +272,16 @@ window.Tank = function () {
                 append: function (Element, Selector) {
                     var scriptElements = [];
                     Tank.forEach(Element, function (elem) {
+                        console.log(elem);
                         Tank.forEach(Tank.element(Selector), function (selector) {
-                            console.log('Selector : '+selector);
-                            console.log(Element);
-                            if (elem.nodeType !== 3) {
+                            if (elem.nodeType !== 3 && elem.querySelectorAll) {
                                 var scripts = Tank.element('script', elem);
                                 Tank.forEach(scripts, function (script) {
-                                    if (!script.src) {
-                                        var oldChild = script.parentNode ? script.parentNode.removeChild(script) : script;
-                                        scriptElements.push(Tank.createElement('script', {
-                                            src: Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML)),
-                                            type: oldChild.type,
-                                            async: false
-                                        }));
-                                    }
+                                    scriptElements.push(Tank.createScript(script));
                                 });
                             }
-                            if (elem.tagName == 'SCRIPT' && !elem.src) {
-                                scriptElements.push(Tank.createElement('script', {
-                                    src: Tank.format('data:{0};base64,{1}', elem.type, window.btoa(elem.innerHTML)),
-                                    type: elem.type,
-                                    async: false
-                                }));
+                            if (elem.tagName == 'SCRIPT' && selector.tagName != 'HEAD') {
+                                scriptElements.push(Tank.createScript(elem));
                             } else {
                                 selector.appendChild(elem);
                             }
@@ -309,6 +314,7 @@ window.Tank = function () {
                     });
                     return new Tank.Event(requests, 'load', this, TriggerEachRequest || false);
                 },
+
                 /**
                  @param Selector {string | Array.<string>}
                  */
@@ -489,6 +495,14 @@ window.Tank = function () {
                         ]
                     };
                 },
+                fadeShow: function (Selector) {
+                    this.flow = {fadeIn: {Selector: Selector, show: {exec: this.copy(this.flow)}}};
+                },
+
+                fadeHide: function (Selector) {
+                    this.flow = {fadeOut: {Selector: Selector, hide: { exec: this.copy(this.flow)} }};
+                },
+
                 /**
                  @param Selector ( string )
                  */

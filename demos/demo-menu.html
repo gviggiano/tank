@@ -13,17 +13,15 @@
                     { url: "./demo-css.html", Selector: "div.demo-container" },
                     { url: "./demo-extend.html", Selector: "div.demo-container" }
                 ],
-                fadeOut: {Selector: "div.demo-container>div"},
-
+                hide: {Selector: "div.demo-container>div"},
                 click:[
-                    {Selector: "li#menu-ajax", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-ajax"}} },
-                    {Selector: "li#menu-css", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-css"}} },
-                    {Selector: "li#menu-extend", fadeOut: { Selector: "div.demo-container>div" , fadeIn: {Selector:"div.demo-container>div.demo-extend"}} }
+                    {Selector: "li#menu-ajax", fadeHide: { Selector: "div.demo-container>div", fadeShow: {Selector:"div.demo-container>div.demo-ajax"}}},
+                    {Selector: "li#menu-css", fadeHide: { Selector: "div.demo-container>div" , fadeShow: {Selector:"div.demo-container>div.demo-css"}}},
+                    {Selector: "li#menu-extend", fadeHide: { Selector: "div.demo-container>div" , fadeShow: {Selector:"div.demo-container>div.demo-extend"}}}
                 ]
             }
         });
     </script>
-
     <div class="demo-container">
     </div>
 </div>
