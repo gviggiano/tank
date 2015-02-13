@@ -139,6 +139,7 @@ window.Tank = function () {
             child.init();
         });
     };
+
     var _extend = function (Global, Local, Handler) {
         for (var gprop in Global) {
             if (Tank.$f[gprop]) console.warn("Tank already contains property" + gprop);
@@ -197,12 +198,12 @@ window.Tank = function () {
             });
         }();
     };
+
     var createScript = function (scriptNode) {
         if (!scriptNode.src) {
-            var oldChild = scriptNode.parentNode ? scriptNode.parentNode.removeChild(scriptNode) : scriptNode;
             return Tank.createElement('script', {
-                src: Tank.format('data:{0};base64,{1}', oldChild.type, window.btoa(oldChild.innerHTML)),
-                type: oldChild.type,
+                src: Tank.format('data:{0};base64,{1}', scriptNode.type, window.btoa(scriptNode.innerHTML)),
+                type: scriptNode.type,
                 async: false
             });
         } else {
@@ -250,10 +251,6 @@ window.Tank = function () {
         },
         extend: {
             Global: {
-
-                event: function (Targets, Type, TriggerEachRequest) {
-                    return new Tank.Event(Targets, Type, this, TriggerEachRequest || false);
-                },
                 /**
                  @function assign
                  @param Model { {name: string, value:string} | Array.<{name: string, value:string}> }
@@ -272,16 +269,16 @@ window.Tank = function () {
                 append: function (Element, Selector) {
                     var scriptElements = [];
                     Tank.forEach(Element, function (elem) {
-                        console.log(elem);
+                        //console.log(elem);
                         Tank.forEach(Tank.element(Selector), function (selector) {
                             if (elem.nodeType !== 3 && elem.querySelectorAll) {
                                 var scripts = Tank.element('script', elem);
                                 Tank.forEach(scripts, function (script) {
-                                    scriptElements.push(Tank.createScript(script));
+                                    scriptElements.push(Tank.createScript(script.parentNode ? script.parentNode.removeChild(script) : script));
                                 });
                             }
                             if (elem.tagName == 'SCRIPT' && selector.tagName != 'HEAD') {
-                                scriptElements.push(Tank.createScript(elem));
+                                scriptElements.push(Tank.createScript(elem.parentNode ? elem.parentNode.removeChild(elem) : elem));
                             } else {
                                 selector.appendChild(elem);
                             }
@@ -358,11 +355,9 @@ window.Tank = function () {
                 styledef: function (Styles) {
                     var str = '';
                     Tank.forEach(Styles, function (style) {
-                        str += style.name + "{\n";
-                        for (var prop in style.attrs) {
-                            str += "\t" + prop + " : " + style.attrs[prop] + ";\n";
-                        }
-                        str += "}\n";
+                        str += style.name.concat("{\n"+Object.keys(style.attrs).map(function (el) {
+                            return "\t".concat(el, ':', style.attrs[el], ';\n');
+                        }).join(''),"}\n");
                     });
                     var href = Tank.format('data:text/css;base64,{0}', window.btoa(str));
                     this.flow = {
@@ -500,7 +495,7 @@ window.Tank = function () {
                 },
 
                 fadeHide: function (Selector) {
-                    this.flow = {fadeOut: {Selector: Selector, hide: { exec: this.copy(this.flow)} }};
+                    this.flow = {fadeOut: {Selector: Selector, hide: {exec: this.copy(this.flow)}}};
                 },
 
                 /**
