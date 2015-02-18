@@ -9,10 +9,10 @@ _XHR requests event triggering
 ## TODO
 
 * Project Standardization in JS format
-* JSON Template/Model binding from/to html
-* Extend functionalities
 * Support event unbind capability
 * Support of "requires" duplicate script awareness
+* JSON Template/Model binding from/to html
+* Extend functionalities
 
 ##API
 
