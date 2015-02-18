@@ -269,7 +269,6 @@ window.Tank = function () {
                 append: function (Element, Selector) {
                     var scriptElements = [];
                     Tank.forEach(Element, function (elem) {
-                        //console.log(elem);
                         Tank.forEach(Tank.element(Selector), function (selector) {
                             if (elem.nodeType !== 3 && elem.querySelectorAll) {
                                 var scripts = Tank.element('script', elem);
@@ -353,16 +352,14 @@ window.Tank = function () {
                  @param Styles (  { name: string, attrs: Object | Array.<{name: string, attrs: Object}> )
                  */
                 styledef: function (Styles) {
-                    var str = '';
-                    Tank.forEach(Styles, function (style) {
-                        str += style.name.concat("{\n"+Object.keys(style.attrs).map(function (el) {
-                            return "\t".concat(el, ':', style.attrs[el], ';\n');
-                        }).join(''),"}\n");
-                    });
-                    var href = Tank.format('data:text/css;base64,{0}', window.btoa(str));
                     this.flow = {
                         append: {
-                            Element: Tank.createElement('link', {rel: "stylesheet", href: href, type: "text/css", async: false}),
+                            Element: Tank.createElement('link', {rel: "stylesheet",
+                                href: Tank.format('data:text/css;base64,{0}', window.btoa(Tank.toArray(Styles).map(function (style) {
+                                    return style.name.concat("{\n"+Object.keys(style.attrs).map(function (el) {
+                                        return "\t".concat(el, ':', style.attrs[el], ';\n');
+                                    }).join(''),"}\n");
+                                }).join(''))), type: "text/css", async: false}),
                             Selector: "head", exec: this.copy(this.flow)
                         }
                     };
