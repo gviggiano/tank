@@ -51,7 +51,13 @@ window.Tank = function () {
     var toArray = function (obj) {
         var t = Tank.typeOf(obj);
         return !obj ? [] : (t == Tank.TYPE_ARRAY) || (t != Tank.TYPE_STRING
-        && Tank.typeOf(obj.length) == Tank.TYPE_NUMBER) ? obj : new Array(obj);
+        && Tank.typeOf(obj.length) == Tank.TYPE_NUMBER) ? function() {
+            var x = [];
+            [].forEach.call(obj, function(el){
+                x.push(el);
+            });
+            return x;
+        }(): new Array(obj);
     };
 
     var format = function () {
@@ -62,9 +68,42 @@ window.Tank = function () {
         });
     };
 
+    var cartesian = function() {
+        var r = [], arg = Tank.toArray(arguments), max = arg.length-1;
+        function helper(arr, i) {
+            arr = Tank.toArray(arr);
+            for (var j=0, l=arg[i].length; j<l; j++) {
+                var a = arr.slice(0); // clone arr
+                a.push(arg[i][j]);
+                if (i==max) {
+                    r.push(a);
+                } else
+                    helper(a, i+1);
+            }
+        }
+        helper([], 0);
+        return r;
+    }
+
     var forEach = function (array, fn) {
-        var cb = Array.prototype.slice.call(arguments,[arguments.length-1]);
-        [].forEach.call(Tank.toArray(array), cb[0]);
+        var cb = arguments[arguments.length-1];
+        var arrs = Array.prototype.slice.apply(arguments, [0, arguments.length-1]);
+        var cart = cartesian.apply(undefined, arrs);
+        console.log('array');
+        console.log(array);
+        //console.log('arrs');
+        //console.log(arrs);
+        var idx =0;
+        //cart.forEach(function(arr) {
+            //arr.forEach(function(el) {
+            //    console.log('arr'+(idx++));
+            //    console.log(arr);
+            //console.log('foreach');
+            //    cb.apply(undefined, arr);
+            //})
+        //});
+        [].forEach.call(Tank.toArray(array), cb);
+        //});
     };
 
     var model = function (expression, handler) {
