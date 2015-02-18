@@ -11,4 +11,10 @@ _XHR requests event triggering
 * Project Standardization in JS format
 * JSON Template/Model binding from/to html
 * Extend functionalities
+* Support event unbind capability
+* Support of "requires" duplicate script awareness
+
+##API
+
+
 
